@@ -13,6 +13,13 @@ MOV ACC DAT
 ```
 This will take the value in the IN register, move it into the ACC register, add 5 to this register then save the restult to the DAT register.
 
+# Code commentary
+I first define data types to represent a value, register and command. Then provided a new line separated file, I split it into lines and process each line into a command, this happens using the 'parseFile', 'parseLine' and 'parseWords' functions mapped and composed together. 
+
+Given this list of Commands, the program then runs by taking an initial register, and running the commands one by one on this register, feeding the output to each subsequent command. This continues until there are no commands left (unless there is an infinite loop of course). The 'executeCommand' function is the most important in this regard, as that is the function that takes a Register and a single Command and works out what the next state should be.
+
+One problem I had was accessing the members in the Register nicely. If I was programming in Java I would use reflection to go from a string to the value of a member variable of a class, however I couldn't figure out a way to do this in Haskell so resulted to case matching which seems like an inefficient approach.
+
 # Languate features
 For details on the assembly like language implemented see the sister project in python ['assemblyRunner'](https://github.com/benWindsorCode/assemblyRunner).
 
