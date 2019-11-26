@@ -80,11 +80,11 @@ sub reg@(Register acc bak dat input out) (SourceReg name) = Register (acc - (acc
 
 -- Function to access a single register given a string. Todo: is there a better way to do this?
 accessRegister :: Register -> String -> Int
-accessRegister (Register acc bak dat input out) "ACC" = acc
-accessRegister (Register acc bak dat input out) "BAK" = bak
-accessRegister (Register acc bak dat input out) "DAT" = dat
-accessRegister (Register acc bak dat input out) "IN" = input
-accessRegister (Register acc bak dat input out) "OUT" = out
+accessRegister (Register acc _ _ _ _) "ACC" = acc
+accessRegister (Register _ bak _ _ _) "BAK" = bak
+accessRegister (Register _ _ dat _ _) "DAT" = dat
+accessRegister (Register _ _ _ input _) "IN" = input
+accessRegister (Register _ _ _ _ out) "OUT" = out
 
 -- Implementation of the MOV command, todo: is there a better way to do this?
 mov :: Register -> Source -> String -> Register

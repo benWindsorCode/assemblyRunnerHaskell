@@ -6,6 +6,7 @@ After installing the haskell stack, run 'cabal v2-run' inside the project direct
 Programs can be run by altering the program variable in the Main function of the Main.hs file.
 
 # Example programs
+You have access to IN, ACC, DAT, OUT, BAK registers and MOV, ADD, SUB commands.
 ```
 MOV IN ACC
 ADD 5
@@ -25,3 +26,4 @@ For details on the assembly like language implemented see the sister project in 
 
 # Missing features/todo
 I have yet to implement the JMP, JEZ, JLZ and label functionality of the language.
+I have yet to implement th SWP and SAV functionality of the language where you can save to the BAK register and swap it into use when needed.
