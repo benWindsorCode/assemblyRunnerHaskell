@@ -12,12 +12,22 @@ data Register = Register {
 
 type Label = String 
 type Instruction = String
--- type Source = String
 type Destination = String
-data Source = Value Int | SourceReg String deriving (Show)
-data Command = Label Label | TwoParam Instruction Source Destination | OneParam Instruction Source deriving (Show)
--- define function that takes instruction and current state and returns next state
 
+-- The source of a command can either be an integer or a register to pull a value out of
+data Source = Value Int | SourceReg String deriving (Show)
+
+-- A command is either a lable to jump to, a two parameter mov command, or a single param command like ADD, SUB, JEZ etc.
+data Command = Label Label | TwoParam Instruction Source Destination | OneParam Instruction Source deriving (Show)
+
+-- Entry point when running with 'cabal v2-run'
+main :: IO ()
+main = do
+    putStrLn $ show $ (runProgram program reg)
+    where 
+        reg = Just (Register 0 0 0 3 0)
+        program = "ADD IN\nADD 5\nMOV ACC DAT"
+        
 -- Given a loaded string of a program file, execute the commands and return the output
 runProgram :: String -> Maybe Register -> Register
 runProgram prog Nothing = executeCommands (Register 0 0 0 0 0) (parseFile prog)
@@ -36,6 +46,7 @@ parseFile input = map parseLine $ lines input
 parseLine :: String -> Command
 parseLine input = parseWords . words $ input
 
+-- Given a line of the program that was split on " ", determine the format of the Command and the Source and parse as required
 parseWords :: [String] -> Command
 parseWords (instruction:source:[]) 
     | processedSource == Nothing = OneParam instruction (SourceReg source)
@@ -83,12 +94,3 @@ mov (Register acc bak dat input out) (SourceReg reg) "DAT"
 mov (Register acc bak dat input out) (SourceReg reg) "ACC"
         | reg == "DAT" = Register dat bak dat input out
 mov (Register acc bak dat input out) (Value val) "ACC" = Register val bak dat input out
-
--- Entry point when running with 'cabal v2-run'
-main :: IO ()
-main = do
-    -- putStrLn $ show $ executeCommand reg (OneParam "ADD" (Value 5))
-    putStrLn $ show $ (runProgram program reg)
-    where 
-        reg = Just (Register 0 0 0 3 0)
-        program = "ADD IN\nADD 5\nMOV ACC DAT"
