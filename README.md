@@ -3,9 +3,15 @@ An attempt at writing a basic assembly interpreter in Haskell. The dialect is ba
 
 # Running
 After installing the haskell stack, run 'cabal v2-run' inside the project directory.
-
-# Test programs
 Programs can be run by altering the program variable in the Main function of the Main.hs file.
+
+# Example programs
+```
+MOV IN ACC
+ADD 5
+MOV ACC DAT
+```
+This will take the value in the IN register, move it into the ACC register, add 5 to this register then save the restult to the DAT register.
 
 # Languate features
 For details on the assembly like language implemented see the sister project in python ['assemblyRunner'](https://github.com/benWindsorCode/assemblyRunner).
